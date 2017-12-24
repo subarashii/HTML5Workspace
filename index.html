@@ -2,15 +2,19 @@
 <html>
 <head>
 <style type="text/css">
-	body{
-		background-image: url("http://api.dujin.org/bing/1920.php");
-	}
+
 </style>
 <title>YTX Index</title>
-<script src="http://app.cloopen.com/im50/ytx-web-im-min-new.js"></script>
+<!--
+
+<script src="YTX.js"></script>-->
+<script src="https://app.cloopen.com/im50/ytx-web-im-min-new.js"></script>
 <script src="jquery-3.1.0.min.js"></script>
 <script src="MD5.min.js"></script>
 <script src="webPhone.js"></script>
+<script src="webCall.js"></script>
+<!--
+<script src="https://unpkg.com/vue"></script>-->
 <script type="text/javascript">
 
 function closePage(){
@@ -20,28 +24,60 @@ function closePage(){
 	RL_YTX.unbindBeforeUnload(id)
 //清除事件的时候 会根据绑定时候返回的ID进行清除
 }
-function logout(){
-	RL_YTX.logout(function(){
-		console.log('logout success');
-	//登出成功处理
-	}, function(obj){
-	//登出失败处理
-		console.log('logout failed')
-	});
-}
 
 
 </script>
 </head>
-<body onload="webPhone.initYTXSDK()">
-	<video id="remotview"></video>
-	<video id="localview"></video>
-	<table>
-		<tr>
-			<td><input type="text" name="account_number" id="account_number" value="13810430659"></td>
-			<td><input type="button" name="login" id="login" value="login" onclick="webPhone.do_login()"></td></tr>
-		<tr>
-			<td><input type="button" name="startViedo" id="startViedo" value="startViedo" onclick="startVideo()" ></td></tr>
+<body onload="webPhone.initYTXSDK()" >
+	<div></div>
+	<div width="50%">
+		<label>remote</label><br>
+	<video  id="remotview" data-video="remotview" autoplay webkit-playsinline controls="true"></video>
+	</div>
+	<div witdh="50%">
+		<label>local</label><br>
+			<video  id="localview" data-video="localview"  autoplay webkit-playsinline controls="true"></video>
+	</div>
+
+
+
+	<!--<video id="localview" autoplay mute controls></video>
+	<video id="remotview" autoplay controls></video>-->
+	<div id="userInfo">
+		<label>UserInfo</label><br>
+		<table>
+			<tr>
+				<td><input type="text" name="account_number" id="account_number" value="13810430659"></td>
+				<td><input type="button" name="login" id="login" value="login" onclick="webPhone.do_login()"></td>
+				<td><input type="button" name="logout" id="logout" value="logout" onclick="webPhone.do_logout()"></td>
+			</tr>
+		</table>
+	</div>
+	<div id="callingParty">
+		<table>
+			<label>Calling Party</label><br>
+			<tr>
+				<td><input type="text" name="dialnumber" id="dialnumber" value="13800138000"></td>
+				<td><select id="calltype"><option value="0">audio</option><option value="1">vidoe</option></select></td>
+				<td><input type="button" name="startCall" id="startCall" value="startCall" onclick="webPhone.startCall()" ></td>
+				<td><input type="button" name="cancelCall" id="cancelCall" value="cancelCall" onclick="webPhone.cancelCall()"></td>
+
+			</tr>
+		</table>
+	</div>
+	<div id="calledParty">
+		<table>
+			<label>Called Party</label><br>
+			<tr>
+				<td><input type="button" name="answerCall" id="answerCall" value="answerCall" onclick="webPhone.answerCall()"></td>
+				<td><input type="button" name="rejectCall" id="rejectCall" value="rejectCall" onclick="webPhone.rejectCall()"></td>
+			</tr>
 	</table>
+	</div>
+	<div>
+		<label>Message</label><br>
+		<textarea rows="10" cols="50" id="messageArea"></textarea>
+	</div>
+
 </body>
 </html>
